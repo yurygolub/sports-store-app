@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Models.Mappers;
 using SportsStore.ViewModels;
 
 namespace SportsStore.Controllers
@@ -30,7 +30,7 @@ namespace SportsStore.Controllers
         public IActionResult Index(long productId, string returnUrl)
         {
             var product = this.repository.Products.FirstOrDefault(p => p.ProductId == productId);
-            this.cart.AddItem(MapProduct(product), 1);
+            this.cart.AddItem(Mapper.MapProduct(product), 1);
             return this.View(new CartViewModel
             {
                 Cart = this.cart,
@@ -48,20 +48,6 @@ namespace SportsStore.Controllers
                 Cart = this.cart,
                 ReturnUrl = returnUrl ?? "/",
             });
-        }
-
-        private static Product MapProduct(Repository.Product product)
-        {
-            _ = product ?? throw new ArgumentNullException(nameof(product));
-
-            return new Product
-            {
-                Name = product.Name,
-                Category = product.Category,
-                Description = product.Description,
-                Price = product.Price,
-                ProductId = product.ProductId,
-            };
         }
     }
 }

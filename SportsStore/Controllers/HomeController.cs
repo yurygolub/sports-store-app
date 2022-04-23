@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SportsStore.Models.Mappers;
 using SportsStore.Repository;
 using SportsStore.ViewModels;
 
@@ -29,7 +30,7 @@ namespace SportsStore.Controllers
                     .OrderBy(p => p.ProductId)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize)
-                    .Select(p => MapProduct(p)),
+                    .Select(p => Mapper.MapProduct(p)),
 
                 PagingInfo = new PagingInfo
                 {
@@ -53,20 +54,6 @@ namespace SportsStore.Controllers
         public IActionResult Error()
         {
             return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
-        }
-
-        private static Models.Product MapProduct(Product product)
-        {
-            _ = product ?? throw new ArgumentNullException(nameof(product));
-
-            return new Models.Product
-            {
-                Name = product.Name,
-                Category = product.Category,
-                Description = product.Description,
-                Price = product.Price,
-                ProductId = product.ProductId,
-            };
         }
     }
 }
