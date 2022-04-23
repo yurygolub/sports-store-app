@@ -54,6 +54,7 @@ namespace SportsStore.Controllers
                 Name = order.Name,
                 State = order.State,
                 Zip = order.Zip,
+                Shipped = order.Shipped,
             };
         }
 

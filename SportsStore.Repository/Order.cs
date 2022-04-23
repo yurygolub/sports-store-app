@@ -31,5 +31,7 @@ namespace SportsStore.Repository
         public string Country { get; set; }
 
         public bool GiftWrap { get; set; }
+
+        public bool Shipped { get; set; }
     }
 }

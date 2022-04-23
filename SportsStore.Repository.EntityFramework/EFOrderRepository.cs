@@ -23,8 +23,6 @@ namespace SportsStore.Repository.EntityFramework
         {
             var orderEntity = MapOrder(order);
 
-
-
             this.context.CartLines.AddRange(orderEntity.Lines);
             this.context.Orders.Add(orderEntity);
 
@@ -48,6 +46,7 @@ namespace SportsStore.Repository.EntityFramework
                 Name = orderEntity.Name,
                 State = orderEntity.State,
                 Zip = orderEntity.Zip,
+                Shipped = orderEntity.Shipped,
             };
         }
 
@@ -68,6 +67,7 @@ namespace SportsStore.Repository.EntityFramework
                 Name = order.Name,
                 State = order.State,
                 Zip = order.Zip,
+                Shipped = order.Shipped,
             };
         }
 
