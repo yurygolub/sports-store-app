@@ -36,6 +36,9 @@ namespace SportsStore
                 .AddSession()
                 .AddScoped(sp => SessionCart.GetCart(sp))
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddServerSideBlazor();
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -87,6 +90,10 @@ namespace SportsStore
                     new { Controller = "Home", action = "Index", productPage = 1 });
 
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");
             });
 
             SeedData.EnsurePopulated(app);
