@@ -1,2 +1,43 @@
 ﻿@page "/admin/orders"
-<h4>This is the orders component</h4>
+@using System.Linq;
+@using SportsStore.Models.Mappers
+@inherits OwningComponentBase<SportsStore.Repository.IOrderRepository>
+
+<OrderTable TableTitle="Unshipped Orders" Orders="UnshippedOrders" ButtonLabel="Ship" OrderSelected="ShipOrder"/>
+<OrderTable TableTitle="Shipped Orders" Orders="ShippedOrders" ButtonLabel="Reset" OrderSelected="ResetOrder"/>
+<button class="btn btn-info" @onclick="@(e => UpdateData())">Refresh Data</button>
+
+@code 
+{
+	public SportsStore.Repository.IOrderRepository OrderRepository => Service;
+
+	public IEnumerable<Order> AllOrders { get; set; }
+
+	public IEnumerable<Order> UnshippedOrders { get; set; }
+
+	public IEnumerable<Order> ShippedOrders { get; set; }
+
+	protected override void OnInitialized()
+	{
+		UpdateData();
+	}
+
+	public void UpdateData()
+	{
+		var allOrders = OrderRepository.Orders.ToList();
+		AllOrders = allOrders.Select(o => Mapper.MapOrder(o));
+		UnshippedOrders = AllOrders.Where(o => !o.Shipped);
+		ShippedOrders = AllOrders.Where(o => o.Shipped);
+	}
+
+	public void ShipOrder(int id) => UpdateOrder(id, true);
+
+	public void ResetOrder(int id) => UpdateOrder(id, false);
+
+	private void UpdateOrder(int id, bool shipValue)
+	{
+		var order = OrderRepository.Orders.FirstOrDefault(o => o.Id == id);
+		order.Shipped = shipValue;
+        OrderRepository.SaveOrder(order);
+    }
+}
