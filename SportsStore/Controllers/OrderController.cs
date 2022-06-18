@@ -30,9 +30,9 @@ namespace SportsStore.Controllers
             if (this.ModelState.IsValid)
             {
                 order.Lines = this.cart.Lines.ToArray();
-                this.repository.SaveOrder(Mapper.MapOrder(order));
+                int orderId = this.repository.SaveOrder(Mapper.MapOrder(order));
                 this.cart.Clear();
-                return this.View("Completed", order.OrderID);
+                return this.View("Completed", orderId);
             }
 
             return this.View();

@@ -11,6 +11,28 @@ namespace SportsStore.Models.Mappers
 
             return new Repository.Order
             {
+                Id = order.OrderID,
+                City = order.City,
+                Country = order.Country,
+                GiftWrap = order.GiftWrap,
+                Line1 = order.Line1,
+                Line2 = order.Line2,
+                Line3 = order.Line3,
+                Lines = order.Lines.Select(l => MapCartLine(l)).ToArray(),
+                Name = order.Name,
+                State = order.State,
+                Zip = order.Zip,
+                Shipped = order.Shipped,
+            };
+        }
+
+        internal static Order MapOrder(Repository.Order order)
+        {
+            _ = order ?? throw new ArgumentNullException(nameof(order));
+
+            return new Order
+            {
+                OrderID = order.Id,
                 City = order.City,
                 Country = order.Country,
                 GiftWrap = order.GiftWrap,
@@ -30,6 +52,17 @@ namespace SportsStore.Models.Mappers
             _ = cartLine ?? throw new ArgumentNullException(nameof(cartLine));
 
             return new Repository.CartLine
+            {
+                Product = MapProduct(cartLine.Product),
+                Quantity = cartLine.Quantity,
+            };
+        }
+
+        internal static CartLine MapCartLine(Repository.CartLine cartLine)
+        {
+            _ = cartLine ?? throw new ArgumentNullException(nameof(cartLine));
+
+            return new CartLine
             {
                 Product = MapProduct(cartLine.Product),
                 Quantity = cartLine.Quantity,

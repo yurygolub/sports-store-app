@@ -16,11 +16,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.16">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.16" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>

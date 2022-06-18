@@ -26,10 +26,7 @@ namespace SportsStore
             services.AddControllersWithViews();
 
             services
-                .AddDbContext<StoreDbContext>(opts =>
-                {
-                    opts.UseSqlServer(this.Configuration["ConnectionStrings:SportsStoreConnection"]);
-                })
+                .AddDbContext<StoreDbContext>(opt => opt.UseInMemoryDatabase("StoreDb"), ServiceLifetime.Singleton)
                 .AddScoped<IStoreRepository, EFStoreRepository>()
                 .AddScoped<IOrderRepository, EFOrderRepository>()
                 .AddDistributedMemoryCache()
