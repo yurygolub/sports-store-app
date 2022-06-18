@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace SportsStore.Repository
 {
     public interface IOrderRepository
     {
-        IQueryable<Order> Orders { get; }
+        IEnumerable<Order> Orders { get; }
 
-        void SaveOrder(Order order);
+        int SaveOrder(Order order);
     }
 }

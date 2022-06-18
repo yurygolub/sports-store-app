@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using SportsStore.Repository.EntityFramework.Entities;
 
 namespace SportsStore.Repository.EntityFramework
@@ -14,19 +14,25 @@ namespace SportsStore.Repository.EntityFramework
             this.context = ctx;
         }
 
-        public IQueryable<Order> Orders => this.context.Orders
-            .Include(o => o.Lines)
-            .ThenInclude(l => l.Product)
+        public IEnumerable<Order> Orders => this.context.Orders
             .Select(o => MapOrder(o));
 
-        public void SaveOrder(Order order)
+        public int SaveOrder(Order order)
         {
             var orderEntity = MapOrder(order);
 
+            var entity = this.context.Orders.Find(orderEntity.Id);
+            if (entity != null)
+            {
+                this.context.Orders.Remove(entity);
+            }
+
             this.context.CartLines.AddRange(orderEntity.Lines);
-            this.context.Orders.Add(orderEntity);
+            int id = this.context.Orders.Add(orderEntity).Entity.Id;
 
             this.context.SaveChanges();
+
+            return id;
         }
 
         private static Order MapOrder(OrderEntity orderEntity)
