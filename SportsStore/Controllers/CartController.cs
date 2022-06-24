@@ -22,6 +22,7 @@ namespace SportsStore.Controllers
         {
             return this.View(new CartViewModel
             {
+                Cart = this.cart,
                 ReturnUrl = returnUrl ?? "/",
             });
         }
