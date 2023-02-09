@@ -33,7 +33,7 @@ namespace SportsStore
                 .AddScoped<IOrderRepository, EFOrderRepository>()
                 .AddDistributedMemoryCache()
                 .AddSession()
-                .AddScoped(sp => SessionCart.GetCart(sp))
+                .AddScoped(SessionCart.GetCart)
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddLogging(builder => builder.AddNLog());
 
