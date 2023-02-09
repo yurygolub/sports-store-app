@@ -50,10 +50,11 @@ namespace SportsStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseStatusCodePages();
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseSession();
