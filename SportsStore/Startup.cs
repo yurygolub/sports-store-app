@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog.Extensions.Logging;
 using SportsStore.Models;
 using SportsStore.Models.Data;
 using SportsStore.Repository;
@@ -33,7 +34,8 @@ namespace SportsStore
                 .AddDistributedMemoryCache()
                 .AddSession()
                 .AddScoped(sp => SessionCart.GetCart(sp))
-                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                .AddLogging(builder => builder.AddNLog());
 
             services.AddServerSideBlazor();
             services.AddRazorPages();
